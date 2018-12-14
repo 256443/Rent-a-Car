@@ -1,0 +1,6 @@
+Error creating bean with name 'customerController'
+- brak adnotacji @Services
+lub niezgodnosc z adnotacja @Id(javax.persistence)
+
+edge between 'Vertex{label='com.antoszek:Server:1.0-SNAPSHOT'}' and 'Vertex{label='com.antoszek:Registration:1.0-SNAPSHOT'}
+- usunac zaleznosci pomiedzy jeda a druga apka :Analyzy -> Analize module dependency
