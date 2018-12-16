@@ -27,9 +27,9 @@ public class Engine {
 
     private int powerInPS;
     private int powerInKW;
-    @Enumerated
+    @Enumerated(STRING)
     private FuelType fuelEngine;
-    @Enumerated
+    @Enumerated(STRING)
     private TransmissionType transmissionType;
     @Enumerated(STRING)
     private TypeOfDrive typeOfDrive;

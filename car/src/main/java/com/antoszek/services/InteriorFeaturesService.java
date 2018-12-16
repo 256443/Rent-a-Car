@@ -23,6 +23,7 @@ import java.util.List;
             InteriorFeatures saveInteriorFeatures = interiorFeatureRepository.save(interiorFeatures);
             return saveInteriorFeatures;
         }
+
         public List<InteriorFeatures> findAll() {
             Iterable<InteriorFeatures> interiorFeaturesIterable = interiorFeatureRepository.findAll();
             List<InteriorFeatures> interiorFeatures = Lists.newArrayList(interiorFeaturesIterable);

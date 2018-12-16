@@ -28,7 +28,7 @@ public class Car {
     private String make;
     private String model;
     private int yearOfProduction;
-    private boolean isAvailable;
+    private boolean availability;
     @Enumerated(STRING)
     private CarClass carClass;
     @Enumerated(STRING)
@@ -89,12 +89,12 @@ public class Car {
         this.yearOfProduction = yearOfProduction;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public boolean isAvailability() {
+        return availability;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
     }
 
     public CarClass getCarClass() {

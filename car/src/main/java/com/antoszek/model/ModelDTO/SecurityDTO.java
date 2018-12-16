@@ -1,25 +1,10 @@
-package com.antoszek.model.entityClass;
+package com.antoszek.model.ModelDTO;
 
-import com.antoszek.model.entityClass.Car;
 import com.antoszek.model.enumClass.TypeOfDrive;
-import jdk.nashorn.internal.ir.annotations.Immutable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Enumerated;
 
-@Entity
-@Immutable
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@ToString
-public class Security {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class SecurityDTO {
     private boolean absSystem;
     private boolean blindSpotAssist; //asysten martwego punktu;
     private boolean lightSensor;
@@ -32,26 +17,8 @@ public class Security {
     private boolean daytimeLight; //światła do jazdy dziennej
     private boolean espSystem;
     private int numberOfAirbag;
+    private Long car_id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car_id")
-    private Car car;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public boolean isAbsSystem() {
-        return absSystem;
-    }
-
-    public void setAbsSystem(boolean absSystem) {
-        this.absSystem = absSystem;
-    }
 
     public boolean isBlindSpotAssist() {
         return blindSpotAssist;
@@ -125,6 +92,14 @@ public class Security {
         this.daytimeLight = daytimeLight;
     }
 
+    public boolean isAbsSystem() {
+        return absSystem;
+    }
+
+    public void setAbsSystem(boolean absSystem) {
+        this.absSystem = absSystem;
+    }
+
     public boolean isEspSystem() {
         return espSystem;
     }
@@ -141,11 +116,11 @@ public class Security {
         this.numberOfAirbag = numberOfAirbag;
     }
 
-    public Car getCar() {
-        return car;
+    public Long getCar_id() {
+        return car_id;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCar_id(Long car_id) {
+        this.car_id = car_id;
     }
 }
