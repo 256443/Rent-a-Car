@@ -13,7 +13,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/app")
 public class ClientController {
 
     private static final Logger log = (Logger) LoggerFactory.getLogger(ClientController.class);
@@ -40,6 +40,7 @@ public class ClientController {
         log.info("Add user {}", savedCustomer);
         return savedCustomer;
     }
+
 }
 
 

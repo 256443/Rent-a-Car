@@ -1,5 +1,6 @@
 package com.antoszek.model.entityClass;
 
+import com.antoszek.model.Client;
 import com.antoszek.model.enumClass.CarClass;
 import com.antoszek.model.enumClass.TypeOfCar;
 import lombok.AllArgsConstructor;
@@ -7,10 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Immutable;
-
-
+//import com.antoszek.
 import javax.persistence.*;
-
+import javax.validation.constraints.NotNull;
+//import
 import static javax.persistence.EnumType.STRING;
 
 
@@ -36,6 +37,11 @@ public class Car {
     private int numberOfSeats;
     private String numberOfDors;
     private String color;
+    private Long client_id;
+//    @OneToMany(fetch = FetchType.LAZY,
+//            mappedBy = "car")
+//    @JoinColumn(name = "client_id", nu)
+//    private Client client;
 
     @OneToOne(fetch = FetchType.LAZY,
             mappedBy = "car")

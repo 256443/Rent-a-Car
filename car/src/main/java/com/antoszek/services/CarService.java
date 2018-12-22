@@ -3,6 +3,8 @@ package com.antoszek.services;
 import com.antoszek.model.entityClass.Car;
 import com.antoszek.repository.CarRepository;
 import java.util.Optional;
+
+import jdk.management.resource.ResourceRequestDeniedException;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,4 +39,11 @@ public class CarService {
         return null;
     }
 
+    public Car update(Car car) {
+        if(carRepository.existsById(car.getId())){
+            return carRepository.save(car);
+        }
+        else{
+            return null;      }
+    }
 }

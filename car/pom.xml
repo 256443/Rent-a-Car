@@ -45,9 +45,8 @@
       <dependency>
           <groupId>mysql</groupId>
           <artifactId>mysql-connector-java</artifactId>
-          <version>5.1.39</version>
-          <scope>runtime</scope>
-  </dependency>
+          <version>8.0.13</version>
+      </dependency>
       <dependency>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-test</artifactId>
@@ -96,6 +95,22 @@
           <artifactId>modelmapper</artifactId>
           <version>0.7.4</version>
       </dependency>
+      <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>com.antoszek</groupId>
+          <artifactId>client</artifactId>
+          <version>1.0-SNAPSHOT</version>
+          <scope>compile</scope>
+      </dependency>
+      <!--<dependency>-->
+          <!--<groupId>com.antoszek</groupId>-->
+          <!--<artifactId>client</artifactId>-->
+          <!--<version>1.0-SNAPSHOT</version>-->
+          <!--<scope>compile</scope>-->
+      <!--</dependency>-->
   </dependencies>
 
   <build>

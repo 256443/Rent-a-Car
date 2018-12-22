@@ -1,24 +1,10 @@
-package com.antoszek.model;
+package com.antoszek.modelDTO;
 
-import com.antoszek.model.entityClass.Car;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Immutable;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
-@Entity
-@Immutable
-@ToString
-public class Client {
-
+public class ClientDTO {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,8 +12,30 @@ public class Client {
     private String lastName;
     private int age;
     private boolean drivingLicense;
-    private Timestamp sinceDrivingLicense;
+    private Date sinceDrivingLicense;
     private String emailAdress;
+    private Long car_id;
+
+    public ClientDTO() {
+    }
+
+    public ClientDTO(String firstName, String lastName, int age, boolean drivingLicense, Date sinceDrivingLicense, String emailAdress, Long car_id) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.drivingLicense = drivingLicense;
+        this.sinceDrivingLicense = sinceDrivingLicense;
+        this.emailAdress = emailAdress;
+        this.car_id = car_id;
+    }
+
+    public Long getCar_id() {
+        return car_id;
+    }
+
+    public void setCar_id(Long car_id) {
+        this.car_id = car_id;
+    }
 
     public Long getId() {
         return id;
@@ -69,11 +77,11 @@ public class Client {
         this.drivingLicense = drivingLicense;
     }
 
-    public Timestamp getSinceDrivingLicense() {
+    public Date getSinceDrivingLicense() {
         return sinceDrivingLicense;
     }
 
-    public void setSinceDrivingLicense(Timestamp sinceDrivingLicense) {
+    public void setSinceDrivingLicense(Date sinceDrivingLicense) {
         this.sinceDrivingLicense = sinceDrivingLicense;
     }
 

@@ -1,3 +1,8 @@
+port aplikcaji:
+client : 8091
+car : 8092
+rentals : 8093
+
 Error creating bean with name 'customerController'
 - brak adnotacji @Services
 lub niezgodnosc z adnotacja @Id(javax.persistence)
