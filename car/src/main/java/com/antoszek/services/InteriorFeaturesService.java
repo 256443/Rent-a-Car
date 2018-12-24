@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
-    @Service
+@Service
     public class InteriorFeaturesService {
         private final InteriorFeatureRepository interiorFeatureRepository;
 
@@ -28,6 +29,26 @@ import java.util.List;
             Iterable<InteriorFeatures> interiorFeaturesIterable = interiorFeatureRepository.findAll();
             List<InteriorFeatures> interiorFeatures = Lists.newArrayList(interiorFeaturesIterable);
             return interiorFeatures;
+        }
+        public InteriorFeatures findById(Long id) {
+            Optional<InteriorFeatures> interiorFeatures = interiorFeatureRepository.findById(id);
+            if (interiorFeatures.isPresent()) {
+                return interiorFeatures.get();
+            }
+            return null;
+        }
+
+        public InteriorFeatures update(InteriorFeatures interiorFeatures) {
+            if(interiorFeatureRepository.existsById(interiorFeatures.getId())){
+                return interiorFeatureRepository.save(interiorFeatures);
+            }
+            else{
+                return null;      }
+        }
+        public String deleteInteriorFeatures(Long id){
+            interiorFeatureRepository.deleteById(id);
+            return "Pomyslnie usunieto wyposazenie wenwentrzne";
+
         }
 
 

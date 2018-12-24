@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EngineService {
@@ -26,5 +27,25 @@ public class EngineService {
         Iterable<Engine> engineIterable = engineRepository.findAll();
         List<Engine> engines = Lists.newArrayList(engineIterable);
         return engines;
+    }
+    public Engine findById(Long id) {
+        Optional<Engine> engine = engineRepository.findById(id);
+        if (engine.isPresent()) {
+            return engine.get();
+        }
+        return null;
+    }
+
+    public Engine update(Engine engine) {
+        if(engineRepository.existsById(engine.getId())){
+            return engineRepository.save(engine);
+        }
+        else{
+            return null;      }
+    }
+    public String deleteEngine(Long id){
+        engineRepository.deleteById(id);
+        return "Pomyslnie usunieto silnik z bazy";
+
     }
 }

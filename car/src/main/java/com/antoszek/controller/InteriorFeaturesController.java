@@ -5,6 +5,7 @@ import com.antoszek.model.entityClass.Car;
 import com.antoszek.model.entityClass.InteriorFeatures;
 import com.antoszek.services.CarService;
 import com.antoszek.services.InteriorFeaturesService;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,29 @@ public class InteriorFeaturesController {
         savedInteriorFeatures.setCar(car);
         interiorFeaturesService.save(savedInteriorFeatures);
         return "Added interior features to car ID:  " + savedInteriorFeatures.getCar().getId();
+    }
+    @RequestMapping("/edit/{id}")
+    @PutMapping(consumes = APPLICATION_JSON_VALUE)
+    public InteriorFeatures update(@PathVariable Long id, @RequestBody InteriorFeaturesDTO interiorFeaturesDTO) {
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        InteriorFeatures updateInteriorFeatures = interiorFeaturesService.findById(id);
+        modelMapper.map(interiorFeaturesDTO,updateInteriorFeatures);
+        interiorFeaturesService.save(updateInteriorFeatures);
+        log.info("Update car Car[]", updateInteriorFeatures.isBluetooth());
+        return updateInteriorFeatures;
+
+    }
+
+    @RequestMapping("/find_byId/{id}")
+    @GetMapping(consumes = APPLICATION_JSON_VALUE)
+    public InteriorFeatures getEngineById(@PathVariable Long id) {
+        return interiorFeaturesService.findById(id);
+    }
+
+    @DeleteMapping("/delete_car/{id}")
+    public String deleteEngine(@PathVariable Long id) {
+        interiorFeaturesService.deleteInteriorFeatures(id);
+        return "Pomyślnie usunięto wyposażenie z samochodu";
     }
 }
 

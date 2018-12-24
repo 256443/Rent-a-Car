@@ -46,4 +46,9 @@ public class CarService {
         else{
             return null;      }
     }
+    public String deleteCar(Long id){
+       carRepository.deleteById(id);
+       return "Pomyslnie usunieto samochłd z bazy";
+
+    }
 }

@@ -3,6 +3,7 @@ package com.antoszek.model.entityClass;
 import com.antoszek.model.Client;
 import com.antoszek.model.enumClass.CarClass;
 import com.antoszek.model.enumClass.TypeOfCar;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,22 +43,24 @@ public class Car {
 //            mappedBy = "car")
 //    @JoinColumn(name = "client_id", nu)
 //    private Client client;
-
+//    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,
             mappedBy = "car")
     @JoinColumn(name = "engine_id", nullable = false)
     private Engine engine;
 
+//    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,
             mappedBy = "car")
     @JoinColumn(name = "interiorFeatures_id", nullable = false)
     private InteriorFeatures interiorFeatures;
-
+//    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,
             mappedBy = "car")
     @JoinColumn(name = "parkingSensor_id", nullable = false)
     private ParkingSensor parkingSensor;
 
+//    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,
             mappedBy = "car")
     @JoinColumn(name = "security_id", nullable = false)

@@ -11,9 +11,11 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -37,7 +39,7 @@ public class CarController {
 
     @RequestMapping("/all_car")
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public List<Car> getCars(){
+    public List<Car> getCars() {
         List<Car> cars = carService.findAll();
         log.info("Retrive objects {}", cars);
         return cars;
@@ -45,29 +47,34 @@ public class CarController {
 
     @RequestMapping("/add_car")
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public Car save(@RequestBody Car car){
+    public Car save(@RequestBody Car car) {
         Car savedCar = carService.save(car);
-        log.info("Add new Car[]", savedCar.getMake() +",  " + savedCar.getModel() );
+        log.info("Add new Car[]", savedCar.getMake() + ",  " + savedCar.getModel());
         return savedCar;
     }
+
     @RequestMapping("/edit/{id}")
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public void update(@PathVariable Long id, @RequestBody CarDTO carDTO){
+    public void update(@PathVariable Long id, @RequestBody CarDTO carDTO) {
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         Car updateCar = carService.findById(id);
         modelMapper.map(carDTO, updateCar);
         carService.save(updateCar);
-        log.info("Update car Car[]", updateCar.getMake() +",  " + updateCar.getModel() );
+        log.info("Update car Car[]", updateCar.getMake() + ",  " + updateCar.getModel());
         return;
 
     }
 
-//    @PutMapping("/edit/{id}")
-//    public Car update(@PathVariable Long id, @RequestBody CarDTO carDTO) {
-//        Car car = carService.findById(id);
-//        car = modelMapper.map(carDTO, Car.class);
-//        carService.update(car);
-//        return car;
-//    }
+    @RequestMapping("/find_byId/{id}")
+    @GetMapping(consumes = APPLICATION_JSON_VALUE)
+    public Car getCarById(@PathVariable Long id) {
+        return carService.findById(id);
+    }
+
+    @DeleteMapping("/delete_car/{id}")
+    public String deleteCar(@PathVariable Long id) {
+        carService.deleteCar(id);
+        return "Pomyślnie usunięto samochod";
+    }
 
 }

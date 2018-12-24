@@ -6,6 +6,7 @@ import com.antoszek.model.entityClass.Security;
 import com.antoszek.services.CarService;
 import com.antoszek.services.SecurityService;
 import org.apache.catalina.mapper.Mapper;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +34,6 @@ public class SecurityController {
     }
 
 
-
-
     @RequestMapping("/all_security")
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<Security> getSecurities(){
@@ -51,6 +50,29 @@ public class SecurityController {
         savedSecurity.setCar(car);
         securityService.save(savedSecurity);
         return "Added security to car ID: " + savedSecurity.getCar().getId();
+    }
+    @RequestMapping("/edit/{id}")
+    @PutMapping(consumes = APPLICATION_JSON_VALUE)
+    public Security update(@PathVariable Long id, @RequestBody SecurityDTO securityDTO) {
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        Security updateSecurity = securityService.findById(id);
+        modelMapper.map(securityDTO,updateSecurity);
+        securityService.update(updateSecurity);
+        log.info("Update car Car[]", updateSecurity.isAbsSystem());
+        return updateSecurity;
+
+    }
+
+    @RequestMapping("/find_byId/{id}")
+    @GetMapping(consumes = APPLICATION_JSON_VALUE)
+    public Security getSecurityById(@PathVariable Long id) {
+        return securityService.findById(id);
+    }
+
+    @DeleteMapping("/delete_security/{id}")
+    public String deleteSecurity(@PathVariable Long id) {
+        securityService.deleteSecurity(id);
+        return "Pomyślnie usunięto czujniki parkowania z samochodu";
     }
 
 

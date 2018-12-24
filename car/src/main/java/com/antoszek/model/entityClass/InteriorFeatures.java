@@ -2,6 +2,7 @@ package com.antoszek.model.entityClass;
 
 import com.antoszek.model.entityClass.Car;
 import com.antoszek.model.enumClass.AirConditioning;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -49,6 +50,7 @@ public class InteriorFeatures {
     @Enumerated(STRING)
     private AirConditioning airConditioning;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;

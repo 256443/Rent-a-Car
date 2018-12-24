@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParkingSensorService {
@@ -26,6 +27,27 @@ public class ParkingSensorService {
         Iterable<ParkingSensor> parkingSensorIterable = parkingSensorRepository.findAll();
         List<ParkingSensor> parkingSensors =Lists.newArrayList(parkingSensorIterable);
         return parkingSensors;
+    }
+
+    public ParkingSensor findById(Long id) {
+        Optional<ParkingSensor> parkingSensor = parkingSensorRepository.findById(id);
+        if (parkingSensor.isPresent()) {
+            return parkingSensor.get();
+        }
+        return null;
+    }
+
+    public ParkingSensor update(ParkingSensor parkingSensor) {
+        if(parkingSensorRepository.existsById(parkingSensor.getId())){
+            return parkingSensorRepository.save(parkingSensor);
+        }
+        else{
+            return null;      }
+    }
+    public String deleteParkingSensor(Long id){
+        parkingSensorRepository.deleteById(id);
+        return "Pomyslnie usunieto czujniki parkowania z bazy";
+
     }
 }
 

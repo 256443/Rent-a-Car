@@ -4,6 +4,7 @@ import com.antoszek.model.entityClass.Car;
 import com.antoszek.model.enumClass.FuelType;
 import com.antoszek.model.enumClass.TransmissionType;
 import com.antoszek.model.enumClass.TypeOfDrive;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,8 @@ public class Engine {
     @Enumerated(STRING)
     private TypeOfDrive typeOfDrive;
     private int cubicCapacity;
+
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;

@@ -6,6 +6,7 @@ import com.antoszek.model.entityClass.Car;
 import com.antoszek.model.entityClass.ParkingSensor;
 import com.antoszek.services.CarService;
 import com.antoszek.services.ParkingSensorService;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,5 +49,28 @@ public class ParkingSensorController {
         savedParkingSensor.setCar(car);
         parkingSensorService.save(savedParkingSensor);
         return "Added parking sensor to car ID: " + savedParkingSensor.getCar().getId();
+    }
+    @RequestMapping("/edit/{id}")
+    @PutMapping(consumes = APPLICATION_JSON_VALUE)
+    public ParkingSensor update(@PathVariable Long id, @RequestBody ParkingSensorDTO parkingSensorDTO) {
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        ParkingSensor updateParkingSensor = parkingSensorService.findById(id);
+        modelMapper.map(parkingSensorDTO, updateParkingSensor);
+        parkingSensorService.save(updateParkingSensor);
+        log.info("Update car Car[]", updateParkingSensor.getId());
+        return updateParkingSensor;
+
+    }
+
+    @RequestMapping("/find_byId/{id}")
+    @GetMapping(consumes = APPLICATION_JSON_VALUE)
+    public ParkingSensor getEngineById(@PathVariable Long id) {
+        return parkingSensorService.findById(id);
+    }
+
+    @DeleteMapping("/delete_parking_sensor/{id}")
+    public String deleteParkingSensor(@PathVariable Long id) {
+        parkingSensorService.deleteParkingSensor(id);
+        return "Pomyślnie usunięto czujniki parkowania  z samochodu";
     }
 }

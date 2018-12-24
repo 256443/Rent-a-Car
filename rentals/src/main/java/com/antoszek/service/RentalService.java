@@ -6,8 +6,12 @@ import com.antoszek.model.entityClass.Car;
 import com.antoszek.repository.RentalRepository;
 import com.antoszek.services.CarService;
 import com.antoszek.services.ClientService;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RentalService {
@@ -38,21 +42,43 @@ public class RentalService {
         }
         else {
             Rentals savedrental = rentalRepository.save(rentals);
+            car.setAvailability(false);
+            carService.update(car);
             return savedrental;
         }
 
     }
+    public List<Rentals> getRentalsByClientId(Long id) {
+        return rentalRepository.getRentalsByClient_id(id);
+    }
+
+    public List<Rentals> getRentalsByCarId(Long id) {
+        return rentalRepository.getRentalsByCar_id(id);
+    }
+    public List<Rentals> findAll(){
+        Iterable<Rentals> rentalsIterable = rentalRepository.findAll();
+        List<Rentals> rental = Lists.newArrayList(rentalsIterable);
+        return rental;
+    }
+    public Rentals find(Long id) {
+        Optional<Rentals> rentals = rentalRepository.findById(id);
+        if (rentals.isPresent()) {
+            return rentals.get();
+        }
+        return null;
+    }
+
+    public String endOffRental(Long id){
+        Rentals r = find(id);
+        Car car = carService.findById(r.getCar_id());
+        car.setAvailability(true);
+        carService.update(car);
+        rentalRepository.deleteById(id);
+        return "Pomyslnie zwrócono wypozyczony samochód";
+    }
+
+    public Rentals update(Rentals rentals) {
+        Rentals r = rentalRepository.save(rentals);
+        return r;
+    }
 }
-
-
-
-//        try {
-//            Car car = carService.findById(rentals.getCar_id());
-//        } catch (NullPointerException e) {
-//            System.out.println("Nie znaleiono samochodu o podnym id");
-//        }
-//        try {
-//            Client client = clientService.findById(rentals.getClient_id());
-//        }catch (NullPointerException e){
-//            System.out.println("Nie znaleziono klienta o podanym id");
-//        }

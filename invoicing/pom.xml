@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.antoszek</groupId>
-    <artifactId>rentals</artifactId>
+    <artifactId>invoicing</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rentals</name>
+    <name>invoicing</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -54,19 +54,13 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.antoszek</groupId>
-            <artifactId>invoicing</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.10.1</version>
         </dependency>
+
     </dependencies>
 
     <build>

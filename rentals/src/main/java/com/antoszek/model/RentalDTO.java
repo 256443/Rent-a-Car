@@ -1,19 +1,16 @@
 package com.antoszek.model;
 
-import com.antoszek.model.entityClass.Car;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jdk.nashorn.internal.ir.annotations.Immutable;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
 import org.joda.time.DateTime;
-@Entity
-@Immutable
-public class Rentals {
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.sql.Timestamp;
+
+public class RentalDTO {
     @Id
     @GeneratedValue
-    private Long id;
+
     private Long client_id;
     private Long car_id;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -22,7 +19,14 @@ public class Rentals {
     private Timestamp dataTo;
     private double numberOfDay;
 
-    public Rentals() {
+    public RentalDTO() {
+    }
+
+    public RentalDTO(Long car_id, Timestamp dataFrom, Timestamp dataTo, double numberOfDay) {
+        this.car_id = car_id;
+        this.dataFrom = dataFrom;
+        this.dataTo = dataTo;
+        this.numberOfDay = numberOfDay;
     }
 
     public double getNumberOfDay() {
@@ -33,16 +37,19 @@ public class Rentals {
         this.numberOfDay = numberOfDay;
     }
 
-    public Rentals(Long client_id, Long car_id, Timestamp dataFrom, Timestamp dataTo, double numberOfDay) {
-        this.client_id = client_id;
-        this.car_id = car_id;
-        this.dataFrom = dataFrom;
-        this.dataTo = dataTo;
-        this.numberOfDay = numberOfDay;
+    public Long getClient_id() {
+        return client_id;
     }
 
-    public Rentals(Long client_id, Long car_id) {
+    public void setClient_id(Long client_id) {
         this.client_id = client_id;
+    }
+
+    public Long getCar_id() {
+        return car_id;
+    }
+
+    public void setCar_id(Long car_id) {
         this.car_id = car_id;
     }
 
@@ -60,29 +67,5 @@ public class Rentals {
 
     public void setDataTo(Timestamp dataTo) {
         this.dataTo = dataTo;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getClient_id() {
-        return client_id;
-    }
-
-    public void setClient_id(Long client_id) {
-        this.client_id = client_id;
-    }
-
-    public Long getCar_id() {
-        return car_id;
-    }
-
-    public void setCar_id(Long car_id) {
-        this.car_id = car_id;
     }
 }

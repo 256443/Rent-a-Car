@@ -19,17 +19,20 @@ public class ClientService {
         this.clientRepository = clientRepository;
 
     }
+
     public Client save(Client client) {
         Client savedClient = clientRepository.save(client);
         return savedClient;
     }
+
     public List<Client> findAll() {
         Iterable<Client> clientsIterable = clientRepository.findAll();
         List<Client> clients = Lists.newArrayList(clientsIterable);
 
         return clients;
     }
-//
+
+    //
     public Client findById(Long id) {
         Optional<Client> client = clientRepository.findById(id);
         if (client.isPresent()) {
@@ -37,18 +40,10 @@ public class ClientService {
         }
         return null;
     }
-//
-//    public Customer update(Customer user) {
-//        Customer updatedUser = customerRepository.save(user);
-//
-////        runEvent(UPDATE, updatedUser.getId(), "Successfull User Update");
-//
-//        return updatedUser;
-//    }
-//
-//    public void deleteCustomer(Long id) {
-//        customerRepository.deleteById(id);
-//
-////        runEvent(DELETE, id, "Successfullll User Delete");
-//    }
+
+    public String deleteClient(Long id) {
+        clientRepository.deleteById(id);
+        return "Client został pomyślnie wyrejestrowany";
+
+    }
 }

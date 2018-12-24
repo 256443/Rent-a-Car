@@ -2,6 +2,7 @@ package com.antoszek.model.entityClass;
 
 import com.antoszek.model.entityClass.Car;
 import com.antoszek.model.enumClass.TypeOfDrive;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class Security {
     private boolean espSystem;
     private int numberOfAirbag;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;

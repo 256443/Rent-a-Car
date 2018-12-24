@@ -6,6 +6,7 @@ import com.antoszek.model.entityClass.Car;
 import com.antoszek.model.entityClass.Engine;
 import com.antoszek.services.CarService;
 import com.antoszek.services.EngineService;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,11 +49,28 @@ public class EngineController {
         engineService.save(savedEngine);
         return "Adding Engine to Car, Car ID: "+ car.getModel() + ",  " + car.getId();
     }
+    @RequestMapping("/edit/{id}")
+    @PutMapping(consumes = APPLICATION_JSON_VALUE)
+    public Engine update(@PathVariable Long id, @RequestBody EngineDTO engineDTO) {
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        Engine updateEngine = engineService.findById(id);
+        modelMapper.map(engineDTO,updateEngine);
+        engineService.save(updateEngine);
+        log.info("Update car Car[]", updateEngine.getPowerInKW() + ",  " + updateEngine.getPowerInPS());
+        return updateEngine;
+    }
+
+
+    @RequestMapping("/find_byId/{id}")
+    @GetMapping(consumes = APPLICATION_JSON_VALUE)
+    public Engine getEngineById(@PathVariable Long id) {
+        return engineService.findById(id);
+    }
+
+    @DeleteMapping("/delete_car/{id}")
+    public String deleteEngine(@PathVariable Long id) {
+        engineService.deleteEngine(id);
+        return "Pomyślnie usunięto silnik z samochodu";
+    }
 }
 
-//savedEngine.setPowerInPS(engineDTO.getPowerInPS());
-//        savedEngine.setPowerInKW(engineDTO.getPowerInKW());
-//        savedEngine.setFuelEngine(engineDTO.getFuelEngine());
-//        savedEngine.setTransmissionType(engineDTO.getTransmissionType());
-//        savedEngine.setTypeOfDrive(engineDTO.getTypeOfDrive());
-//        savedEngine.setCubicCapacity(engineDTO.getCubicCapacity());
