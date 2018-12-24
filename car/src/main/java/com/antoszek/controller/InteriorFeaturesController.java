@@ -42,12 +42,12 @@ public class InteriorFeaturesController {
 
     @RequestMapping(value = "/add_interior_features_to_car",method = RequestMethod.POST)
     @PostMapping(produces = APPLICATION_JSON_VALUE)
-    public String saveInteriorFeaturesToCar(@RequestBody InteriorFeaturesDTO interiorFeaturesDTO){
+    public InteriorFeatures saveInteriorFeaturesToCar(@RequestBody InteriorFeaturesDTO interiorFeaturesDTO){
         InteriorFeatures savedInteriorFeatures =  modelMapper.map(interiorFeaturesDTO,InteriorFeatures.class);
         Car car = carService.findById(interiorFeaturesDTO.getCar_id());
         savedInteriorFeatures.setCar(car);
         interiorFeaturesService.save(savedInteriorFeatures);
-        return "Added interior features to car ID:  " + savedInteriorFeatures.getCar().getId();
+        return savedInteriorFeatures;
     }
     @RequestMapping("/edit/{id}")
     @PutMapping(consumes = APPLICATION_JSON_VALUE)

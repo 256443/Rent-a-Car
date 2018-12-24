@@ -42,12 +42,12 @@ public class EngineController {
     }
     @RequestMapping(value = "/add_engine_to_car", method = RequestMethod.POST)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public String saveEngineToCar(@RequestBody EngineDTO engineDTO){
+    public Engine saveEngineToCar(@RequestBody EngineDTO engineDTO){
         Engine savedEngine = modelMapper.map(engineDTO, Engine.class);
         Car car = carService.findById(engineDTO.getCar_id());
         savedEngine.setCar(car);
         engineService.save(savedEngine);
-        return "Adding Engine to Car, Car ID: "+ car.getModel() + ",  " + car.getId();
+        return savedEngine;
     }
     @RequestMapping("/edit/{id}")
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
@@ -67,7 +67,7 @@ public class EngineController {
         return engineService.findById(id);
     }
 
-    @DeleteMapping("/delete_car/{id}")
+    @DeleteMapping("/delete_engine/{id}")
     public String deleteEngine(@PathVariable Long id) {
         engineService.deleteEngine(id);
         return "Pomyślnie usunięto silnik z samochodu";

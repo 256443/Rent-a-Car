@@ -44,12 +44,12 @@ public class SecurityController {
 
     @RequestMapping(value = "/add_security_to_car", method = RequestMethod.POST)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public String saveSecurityToCar(@RequestBody SecurityDTO securityDTO){
+    public Security saveSecurityToCar(@RequestBody SecurityDTO securityDTO){
         Security savedSecurity = modelMapper.map(securityDTO, Security.class);
         Car car = carService.findById(securityDTO.getCar_id());
         savedSecurity.setCar(car);
         securityService.save(savedSecurity);
-        return "Added security to car ID: " + savedSecurity.getCar().getId();
+        return savedSecurity;
     }
     @RequestMapping("/edit/{id}")
     @PutMapping(consumes = APPLICATION_JSON_VALUE)

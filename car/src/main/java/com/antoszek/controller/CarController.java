@@ -55,13 +55,13 @@ public class CarController {
 
     @RequestMapping("/edit/{id}")
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public void update(@PathVariable Long id, @RequestBody CarDTO carDTO) {
+    public Car update(@PathVariable Long id, @RequestBody CarDTO carDTO) {
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         Car updateCar = carService.findById(id);
         modelMapper.map(carDTO, updateCar);
         carService.save(updateCar);
         log.info("Update car Car[]", updateCar.getMake() + ",  " + updateCar.getModel());
-        return;
+        return updateCar;
 
     }
 
