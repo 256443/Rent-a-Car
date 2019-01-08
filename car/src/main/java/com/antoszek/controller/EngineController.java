@@ -60,6 +60,13 @@ public class EngineController {
         return updateEngine;
     }
 
+    @RequestMapping("/edit")
+    @PutMapping(consumes = APPLICATION_JSON_VALUE)
+    public Engine update(@RequestBody Engine engine) {
+        Engine updateEngine= engineService.update(engine);
+        log.info("Updated Car {}", updateEngine);
+        return updateEngine;
+    }
 
     @RequestMapping("/find_byId/{id}")
     @GetMapping(consumes = APPLICATION_JSON_VALUE)

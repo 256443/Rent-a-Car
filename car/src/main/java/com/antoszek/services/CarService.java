@@ -2,6 +2,7 @@ package com.antoszek.services;
 
 import com.antoszek.model.entityClass.Car;
 import com.antoszek.repository.CarRepository;
+
 import java.util.Optional;
 
 import jdk.management.resource.ResourceRequestDeniedException;
@@ -21,16 +22,17 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public Car save(Car car){
+    public Car save(Car car) {
         Car savedCar = carRepository.save(car);
         return savedCar;
     }
 
-    public List<Car> findAll(){
+    public List<Car> findAll() {
         Iterable<Car> carsIterable = carRepository.findAll();
         List<Car> cars = Lists.newArrayList(carsIterable);
         return cars;
     }
+
     public Car findById(Long id) {
         Optional<Car> car = carRepository.findById(id);
         if (car.isPresent()) {
@@ -40,15 +42,20 @@ public class CarService {
     }
 
     public Car update(Car car) {
-        if(carRepository.existsById(car.getId())){
+        if (carRepository.existsById(car.getId())) {
             return carRepository.save(car);
+        } else {
+            return null;
         }
-        else{
-            return null;      }
     }
-    public String deleteCar(Long id){
-       carRepository.deleteById(id);
-       return "Pomyslnie usunieto samochłd z bazy";
+//    public Car update(Car car) {
+//        Car updatedCar = carRepository.save(car);
+//        return updatedCar;
+//    }
+
+    public String deleteCar(Long id) {
+        carRepository.deleteById(id);
+        return "Pomyslnie usunieto samochłd z bazy";
 
     }
 }

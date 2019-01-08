@@ -33,9 +33,6 @@ public class RentalController {
     private final InvoiceService invoiceService;
 
     @Autowired
-    private ModelMapper modelMapper;
-    private ObjectMapper objectMapper;
-    @Autowired
     public RentalController(RentalService rentalService, CarService carService, ClientService clientService, InvoiceService invoiceService) {
         this.rentalService = rentalService;
         this.carService = carService;
@@ -45,49 +42,52 @@ public class RentalController {
 
     @RequestMapping("/save_rental")
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public String save(@RequestBody Rentals rentals){
+    public String save(@RequestBody Rentals rentals) {
         Rentals rentalsSaved = rentalService.save(rentals);
-        if(rentalsSaved == null)
+        if (rentalsSaved == null)
             return "Wypożyczenie nie możliwe, samochód jest w tej chwili nie dostępny";
-        log.info("Add new Rental[]", "Car ID: ",rentalsSaved.getCar_id(), "Client ID: ", rentalsSaved.getClient_id());
+        log.info("Add new Rental[]", "Car ID: ", rentalsSaved.getCar_id(), "Client ID: ", rentalsSaved.getClient_id());
         return "Wypozyczenie udane";
     }
+
     @RequestMapping("/all_rental")
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public List<Rentals> getAllRentals(){
+    public List<Rentals> getAllRentals() {
         List<Rentals> rentals = rentalService.findAll();
         log.info("Retrive objects {}", rentals);
         return rentals;
     }
+
     @RequestMapping("/find_byId/{id}")
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public Rentals findById(@PathVariable Long id){
-        return rentalService.find(id);
+    public Rentals findById(@PathVariable Long id) {
+        return rentalService.findById(id);
     }
 
     @RequestMapping("/all_rentals_by_user_id/{id}")
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public List<Rentals> getRentalsByUserId(@PathVariable Long id){
+    public List<Rentals> getRentalsByUserId(@PathVariable Long id) {
         return rentalService.getRentalsByClientId(id);
     }
 
     @RequestMapping("/all_rentals_by_car_id/{id}")
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public List<Rentals> getRentalsByCarsId(@PathVariable Long id){
+    public List<Rentals> getRentalsByCarsId(@PathVariable Long id) {
         return rentalService.getRentalsByCarId(id);
     }
 
     @DeleteMapping("end_rental/{id}")
-    public String deleteRental(@PathVariable Long id){
+    public String deleteRental(@PathVariable Long id) {
         newInvoice(id);
         rentalService.endOffRental(id);
         return "Pomyślnie zwrócono samochód...";
     }
-    public Invoice newInvoice(Long id){
-        FactoryInvoice factoryInvoice =  new FactoryInvoice();
-        Rentals r = rentalService.find(id);
-        Car c =  carService.findById(r.getCar_id());
-        double value = factoryInvoice.factoryCalculate(c.getCarClass(),r.getNumberOfDay() );
+
+    public Invoice newInvoice(Long id) {
+        FactoryInvoice factoryInvoice = new FactoryInvoice();
+        Rentals r = rentalService.findById(id);
+        Car c = carService.findById(r.getCar_id());
+        double value = factoryInvoice.factoryCalculate(c.getCarClass(), r.getNumberOfDay());
         Invoice i = new Invoice();
         i.setCar_id(c.getId());
         i.setClient_id(r.getClient_id());
@@ -96,14 +96,12 @@ public class RentalController {
         return i;
     }
 
-    @RequestMapping("/edit/{id}")
+    @RequestMapping("/edit")
     @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public Rentals update(@PathVariable Long id, @RequestBody RentalDTO rentalDTO){
-        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNull());
-        Rentals updateRentals = rentalService.find(id);
-        modelMapper.map(rentalDTO,updateRentals);
-        rentalService.update(updateRentals);
-        return updateRentals;
+    public Rentals update(@RequestBody Rentals rentals) {
+        Rentals updatedRentals = rentalService.saveForUpdate(rentals);
+        log.info("Updated Rental {}", updatedRentals);
+        return updatedRentals;
     }
 
 }

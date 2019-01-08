@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import org.joda.time.DateTime;
 @Entity
-@Immutable
 public class Rentals {
 
     @Id

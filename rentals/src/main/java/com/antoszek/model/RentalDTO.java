@@ -8,14 +8,12 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 public class RentalDTO {
-    @Id
-    @GeneratedValue
 
     private Long client_id;
     private Long car_id;
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp dataFrom;
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp dataTo;
     private double numberOfDay;
 

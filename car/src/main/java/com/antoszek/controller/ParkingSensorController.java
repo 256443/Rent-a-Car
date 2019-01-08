@@ -43,12 +43,12 @@ public class ParkingSensorController {
 
     @RequestMapping(value = "/add_parking_sensor", method = RequestMethod.POST)
     @PostMapping(produces = APPLICATION_JSON_VALUE)
-    public String saveParkingSensor(@RequestBody ParkingSensorDTO parkingSensorDTO){
+    public ParkingSensor saveParkingSensor(@RequestBody ParkingSensorDTO parkingSensorDTO){
         ParkingSensor savedParkingSensor = modelMapper.map(parkingSensorDTO,ParkingSensor.class);
         Car car = carService.findById(parkingSensorDTO.getCar_id());
         savedParkingSensor.setCar(car);
         parkingSensorService.save(savedParkingSensor);
-        return "Added parking sensor to car ID: " + savedParkingSensor.getCar().getId();
+        return savedParkingSensor;
     }
     @RequestMapping("/edit/{id}")
     @PutMapping(consumes = APPLICATION_JSON_VALUE)

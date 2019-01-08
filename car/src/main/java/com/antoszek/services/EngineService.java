@@ -18,16 +18,17 @@ public class EngineService {
         this.engineRepository = engineRepository;
     }
 
-    public Engine save(Engine engine){
+    public Engine save(Engine engine) {
         Engine saveEngine = engineRepository.save(engine);
         return saveEngine;
     }
 
-    public List<Engine> findAll(){
+    public List<Engine> findAll() {
         Iterable<Engine> engineIterable = engineRepository.findAll();
         List<Engine> engines = Lists.newArrayList(engineIterable);
         return engines;
     }
+
     public Engine findById(Long id) {
         Optional<Engine> engine = engineRepository.findById(id);
         if (engine.isPresent()) {
@@ -36,14 +37,19 @@ public class EngineService {
         return null;
     }
 
-    public Engine update(Engine engine) {
+        public Engine update(Engine engine) {
         if(engineRepository.existsById(engine.getId())){
             return engineRepository.save(engine);
         }
         else{
             return null;      }
     }
-    public String deleteEngine(Long id){
+//    public Engine update(Engine engine) {
+//        Engine updateEngine = engineRepository.save(engine);
+//        return updateEngine;
+//    }
+
+    public String deleteEngine(Long id) {
         engineRepository.deleteById(id);
         return "Pomyslnie usunieto silnik z bazy";
 

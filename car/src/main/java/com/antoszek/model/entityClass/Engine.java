@@ -16,7 +16,6 @@ import javax.persistence.*;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
-@Immutable
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

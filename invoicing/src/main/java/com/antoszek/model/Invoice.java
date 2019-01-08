@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-@Immutable
 public class Invoice {
     @Id
     @GeneratedValue

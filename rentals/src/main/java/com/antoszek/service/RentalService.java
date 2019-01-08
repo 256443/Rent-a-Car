@@ -41,12 +41,15 @@ public class RentalService {
             return null;
         }
         else {
-            Rentals savedrental = rentalRepository.save(rentals);
+            Rentals savedRental = rentalRepository.save(rentals);
             car.setAvailability(false);
             carService.update(car);
-            return savedrental;
+            return savedRental;
         }
-
+    }
+    public Rentals saveForUpdate(Rentals rentals) {
+        Rentals updatedRentals = rentalRepository.save(rentals);
+        return updatedRentals;
     }
     public List<Rentals> getRentalsByClientId(Long id) {
         return rentalRepository.getRentalsByClient_id(id);
@@ -60,7 +63,7 @@ public class RentalService {
         List<Rentals> rental = Lists.newArrayList(rentalsIterable);
         return rental;
     }
-    public Rentals find(Long id) {
+    public Rentals findById(Long id) {
         Optional<Rentals> rentals = rentalRepository.findById(id);
         if (rentals.isPresent()) {
             return rentals.get();
@@ -69,7 +72,7 @@ public class RentalService {
     }
 
     public String endOffRental(Long id){
-        Rentals r = find(id);
+        Rentals r = findById(id);
         Car car = carService.findById(r.getCar_id());
         car.setAvailability(true);
         carService.update(car);
@@ -77,8 +80,5 @@ public class RentalService {
         return "Pomyslnie zwrócono wypozyczony samochód";
     }
 
-    public Rentals update(Rentals rentals) {
-        Rentals r = rentalRepository.save(rentals);
-        return r;
-    }
+
 }
