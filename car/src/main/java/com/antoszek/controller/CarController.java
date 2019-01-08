@@ -64,13 +64,6 @@ public class CarController {
         return updateCar;
 
     }
-//    @RequestMapping("/edit")
-//    @PutMapping(consumes = APPLICATION_JSON_VALUE)
-//    public Car update(@RequestBody Car car) {
-//        Car updatedCar = carService.update(car);
-//        log.info("Updated Car {}", updatedCar);
-//        return updatedCar;
-//    }
 
     @RequestMapping("/find_byId/{id}")
     @GetMapping(consumes = APPLICATION_JSON_VALUE)

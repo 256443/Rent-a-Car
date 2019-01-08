@@ -67,7 +67,7 @@ public class InteriorFeaturesController {
         return interiorFeaturesService.findById(id);
     }
 
-    @DeleteMapping("/delete_car/{id}")
+    @DeleteMapping("/delete_interior_feature/{id}")
     public String deleteEngine(@PathVariable Long id) {
         interiorFeaturesService.deleteInteriorFeatures(id);
         return "Pomyślnie usunięto wyposażenie z samochodu";

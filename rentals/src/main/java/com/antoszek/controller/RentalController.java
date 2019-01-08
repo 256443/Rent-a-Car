@@ -42,12 +42,12 @@ public class RentalController {
 
     @RequestMapping("/save_rental")
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public String save(@RequestBody Rentals rentals) {
+    public Rentals save(@RequestBody Rentals rentals) {
         Rentals rentalsSaved = rentalService.save(rentals);
         if (rentalsSaved == null)
-            return "Wypożyczenie nie możliwe, samochód jest w tej chwili nie dostępny";
+            return null;
         log.info("Add new Rental[]", "Car ID: ", rentalsSaved.getCar_id(), "Client ID: ", rentalsSaved.getClient_id());
-        return "Wypozyczenie udane";
+        return rentals;
     }
 
     @RequestMapping("/all_rental")
@@ -92,6 +92,7 @@ public class RentalController {
         i.setCar_id(c.getId());
         i.setClient_id(r.getClient_id());
         i.setValue(value);
+        i.setRental_id(r.getId());
         invoiceService.save(i);
         return i;
     }

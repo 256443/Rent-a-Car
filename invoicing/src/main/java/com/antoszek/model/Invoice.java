@@ -17,6 +17,7 @@ public class Invoice {
     private Long client_id;
     private Long car_id;
     private double value;
+    private Long rental_id;
 
     public Invoice() {
     }
@@ -25,6 +26,14 @@ public class Invoice {
         this.client_id = client_id;
         this.car_id = car_id;
         this.value = value;
+    }
+
+    public Long getRental_id() {
+        return rental_id;
+    }
+
+    public void setRental_id(Long rental_id) {
+        this.rental_id = rental_id;
     }
 
     public Long getId() {
